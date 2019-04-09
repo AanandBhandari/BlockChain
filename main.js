@@ -4,7 +4,8 @@ class Block {
     constructor (index,timeStamp,data,previousHash='') {
         this.index = index;
         this.timeStamp = timeStamp;
-        this.data = previousHash;
+        this.data = data;
+        this.previousHash = previousHash;
         this.hash = this.calculateHash()
     }
     calculateHash() {
@@ -27,3 +28,9 @@ class Blockchain {
         this.chain.push(newBlock);
     }
 }
+
+let myCoin = new Blockchain();
+myCoin.addBlock(new Block(1, '10/09/2019', { amount: 4 }))
+myCoin.addBlock(new Block(2, '10/09/2019', { amount: 10 }))
+
+console.log(JSON.stringify(myCoin,null,4));
