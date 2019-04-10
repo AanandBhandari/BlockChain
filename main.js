@@ -58,6 +58,9 @@ class Blockchain {
     createTransaction(transaction) {
         this.pendingTransactions.push(transaction);
     }
+    getBalanceOfAddress() {
+        let balance = 0;
+    }
     isValidChain() {
         for (let i = 1; i <this.chain.length; i++) {
             const currentBlock = this.chain[i];
