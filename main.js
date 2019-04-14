@@ -58,8 +58,19 @@ class Blockchain {
     createTransaction(transaction) {
         this.pendingTransactions.push(transaction);
     }
-    getBalanceOfAddress() {
+    getBalanceOfAddress(address) {
         let balance = 0;
+        for(const block of this.chain) {
+            for(const trans of block.transaction) {
+                if (trans.fromAddress === address) {
+                    balance -= trans.amount
+                }
+                if(trans.toAddress === address) {
+                    balance += trans.amount
+                }
+            }
+        }
+        return balance;
     }
     isValidChain() {
         for (let i = 1; i <this.chain.length; i++) {
@@ -78,3 +89,13 @@ class Blockchain {
 }
 
 let myCoin = new Blockchain();
+myCoin.createTransaction(new Transaction('address1', 'address2', 100))
+myCoin.createTransaction(new Transaction('address2', 'address1', 50))
+
+console.log('\n Starting a miner...');
+myCoin.minePendingTransactions('address3');
+console.log('\n Balance of address3 is', myCoin.getBalanceOfAddress('address3'));
+
+console.log('\n Starting a miner again...');
+myCoin.minePendingTransactions('address3');
+console.log('\n Balance of address3 is', myCoin.getBalanceOfAddress('address3'));
